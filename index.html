@@ -4,29 +4,38 @@
     <meta charset="UTF-8">
     <title>Networking Hub</title>
     <style>
-        /* General Styles */
+        /* Reset and Basic Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             background-color: #0d0d0d;
             color: #00ff00;
             font-family: 'Courier New', Courier, monospace;
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
+            height: 100vh;
             display: flex;
-            flex-direction: column;
             align-items: center;
+            justify-content: center;
+            overflow: hidden;
         }
 
-        /* Containers */
+        /* Container Styles */
         .container, .company-list, .company-details {
             display: none; /* Hidden by default */
             flex-direction: column;
             align-items: center;
             justify-content: center;
             padding: 20px;
-            width: 100%;
+            width: 90%;
             max-width: 1200px;
-            box-sizing: border-box;
+            overflow-y: auto;
+            height: 90vh;
+            background-color: rgba(13, 13, 13, 0.95);
+            border: 2px solid #00ff00;
+            border-radius: 10px;
         }
 
         /* Main Container (Visible on Load) */
@@ -44,9 +53,10 @@
         /* Description */
         .description {
             max-width: 600px;
-            margin: 0 auto 30px;
+            margin-bottom: 30px;
             font-size: 1.2em;
             line-height: 1.5;
+            text-align: center;
             text-shadow: 0 0 3px #00ff00;
         }
 
@@ -56,6 +66,7 @@
             flex-wrap: wrap;
             justify-content: center;
             gap: 15px;
+            margin-bottom: 20px;
         }
 
         .button {
@@ -79,15 +90,17 @@
         /* Company Grid */
         .company-list h2 {
             margin-bottom: 20px;
+            text-align: center;
         }
 
         .company-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 20px;
             width: 100%;
             padding: 10px;
-            box-sizing: border-box;
+            overflow-y: auto;
+            max-height: 70vh;
         }
 
         .company-card {
@@ -98,7 +111,9 @@
             cursor: pointer;
             transition: transform 0.3s, box-shadow 0.3s;
             color: #00ff00;
-            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .company-card:hover {
@@ -107,19 +122,28 @@
         }
 
         .company-card h3 {
-            margin: 10px 0;
+            margin-bottom: 10px;
             font-size: 1.5em;
             text-shadow: 0 0 3px #00ff00;
         }
 
         .company-card p {
-            margin: 5px 0;
             font-size: 1em;
+            margin-bottom: 10px;
         }
 
-        .contact-info {
-            margin-top: 15px;
+        .contact-info p {
             font-size: 0.9em;
+            margin: 3px 0;
+        }
+
+        .contact-info a {
+            color: #00ff00;
+            text-decoration: none;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
         }
 
         /* Back Buttons */
@@ -178,6 +202,12 @@
         }
 
         /* Responsive Design */
+        @media (max-width: 900px) {
+            .company-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+
         @media (max-width: 600px) {
             h1, h2 {
                 font-size: 2em;
@@ -259,7 +289,7 @@
     </div>
 
     <script>
-        // Company Data with VP Contact Information
+        // Company Data with Expanded Lists and VP Contact Information
         const data = {
             USA: [
                 {
@@ -311,8 +341,58 @@
                     ceo_phone: '+1-650-681-5000',
                     vp_email: 'sarah.connor@tesla.com',
                     vp_phone: '+1-650-681-6000'
+                },
+                // Additional USA Companies
+                {
+                    name: 'Facebook (Meta)',
+                    description: 'Social Media, Virtual Reality',
+                    ceo: 'Mark Zuckerberg',
+                    vp: 'Emily Davis',
+                    ceo_email: 'mark.zuckerberg@meta.com',
+                    ceo_phone: '+1-650-543-4800',
+                    vp_email: 'emily.davis@meta.com',
+                    vp_phone: '+1-650-543-4801'
+                },
+                {
+                    name: 'Netflix',
+                    description: 'Streaming Services',
+                    ceo: 'Ted Sarandos',
+                    vp: 'Robert Johnson',
+                    ceo_email: 'ted.sarandos@netflix.com',
+                    ceo_phone: '+1-408-540-3700',
+                    vp_email: 'robert.johnson@netflix.com',
+                    vp_phone: '+1-408-540-3701'
+                },
+                {
+                    name: 'IBM',
+                    description: 'Technology, Consulting',
+                    ceo: 'Arvind Krishna',
+                    vp: 'Linda Martinez',
+                    ceo_email: 'arvind.krishna@ibm.com',
+                    ceo_phone: '+1-914-499-1900',
+                    vp_email: 'linda.martinez@ibm.com',
+                    vp_phone: '+1-914-499-1901'
+                },
+                {
+                    name: 'Intel',
+                    description: 'Semiconductors',
+                    ceo: 'Pat Gelsinger',
+                    vp: 'Kevin Brown',
+                    ceo_email: 'pat.gelsinger@intel.com',
+                    ceo_phone: '+1-408-765-8080',
+                    vp_email: 'kevin.brown@intel.com',
+                    vp_phone: '+1-408-765-8081'
+                },
+                {
+                    name: 'Cisco Systems',
+                    description: 'Networking Hardware, Telecommunications',
+                    ceo: 'Chuck Robbins',
+                    vp: 'Diana Lee',
+                    ceo_email: 'chuck.robbins@cisco.com',
+                    ceo_phone: '+1-408-526-4000',
+                    vp_email: 'diana.lee@cisco.com',
+                    vp_phone: '+1-408-526-4001'
                 }
-                // Add more USA companies as needed
             ],
             Europe: [
                 {
@@ -364,8 +444,58 @@
                     ceo_phone: '+49-6227-747474',
                     vp_email: 'ingrid.schuster@sap.com',
                     vp_phone: '+49-6227-747475'
+                },
+                // Additional European Companies
+                {
+                    name: 'Siemens',
+                    description: 'Engineering, Electronics',
+                    ceo: 'Roland Busch',
+                    vp: 'Anja Schmidt',
+                    ceo_email: 'roland.busch@siemens.com',
+                    ceo_phone: '+49-89-636-00',
+                    vp_email: 'anja.schmidt@siemens.com',
+                    vp_phone: '+49-89-636-01'
+                },
+                {
+                    name: 'Unilever',
+                    description: 'Consumer Goods',
+                    ceo: 'Alan Jope',
+                    vp: 'Maria Garcia',
+                    ceo_email: 'alan.jope@unilever.com',
+                    ceo_phone: '+44-20-7822-5252',
+                    vp_email: 'maria.garcia@unilever.com',
+                    vp_phone: '+44-20-7822-5253'
+                },
+                {
+                    name: 'BMW Group',
+                    description: 'Automobiles',
+                    ceo: 'Oliver Zipse',
+                    vp: 'Hans Müller',
+                    ceo_email: 'oliver.zipse@bmwgroup.com',
+                    ceo_phone: '+49-89-382-0',
+                    vp_email: 'hans.mueller@bmwgroup.com',
+                    vp_phone: '+49-89-382-1'
+                },
+                {
+                    name: 'Airbus',
+                    description: 'Aerospace',
+                    ceo: 'Guillaume Faury',
+                    vp: 'Sophie Dubois',
+                    ceo_email: 'guillaume.faury@airbus.com',
+                    ceo_phone: '+33-5-61-93-33-33',
+                    vp_email: 'sophie.dubois@airbus.com',
+                    vp_phone: '+33-5-61-93-33-34'
+                },
+                {
+                    name: 'Ikea',
+                    description: 'Furniture Retail',
+                    ceo: 'Jon Abrahamsson Ring',
+                    vp: 'Eva Svensson',
+                    ceo_email: 'jon.ring@ikea.com',
+                    ceo_phone: '+46-8-796-90-00',
+                    vp_email: 'eva.svensson@ikea.com',
+                    vp_phone: '+46-8-796-90-01'
                 }
-                // Add more European companies as needed
             ],
             Asia: [
                 {
@@ -417,8 +547,58 @@
                     ceo_phone: '+86-755-8601-3388',
                     vp_email: 'ying.li@tencent.com',
                     vp_phone: '+86-755-8601-3389'
+                },
+                // Additional Asian Companies
+                {
+                    name: 'Sony',
+                    description: 'Electronics, Entertainment',
+                    ceo: 'Kenichiro Yoshida',
+                    vp: 'Mika Tanaka',
+                    ceo_email: 'kenichiro.yoshida@sony.com',
+                    ceo_phone: '+81-3-6748-2111',
+                    vp_email: 'mika.tanaka@sony.com',
+                    vp_phone: '+81-3-6748-2112'
+                },
+                {
+                    name: 'Huawei',
+                    description: 'Telecommunications',
+                    ceo: 'Ren Zhengfei',
+                    vp: 'Li Wei',
+                    ceo_email: 'ren.zhengfei@huawei.com',
+                    ceo_phone: '+86-10-xxxx-xxxx',
+                    vp_email: 'li.wei@huawei.com',
+                    vp_phone: '+86-10-xxxx-xxxx'
+                },
+                {
+                    name: 'Samsung Heavy Industries',
+                    description: 'Shipbuilding',
+                    ceo: 'Kim Woo-jung',
+                    vp: 'Jin Ho Lee',
+                    ceo_email: 'kim.woojung@shi.com',
+                    ceo_phone: '+82-62-xxx-xxxx',
+                    vp_email: 'jin.ho.lee@shi.com',
+                    vp_phone: '+82-62-xxx-xxxx'
+                },
+                {
+                    name: 'SoftBank',
+                    description: 'Telecommunications, Investments',
+                    ceo: 'Masayoshi Son',
+                    vp: 'Aya Nakamura',
+                    ceo_email: 'masayoshi.son@softbank.com',
+                    ceo_phone: '+81-3-xxxx-xxxx',
+                    vp_email: 'aya.nakamura@softbank.com',
+                    vp_phone: '+81-3-xxxx-xxxx'
+                },
+                {
+                    name: 'Tencent Holdings',
+                    description: 'Internet, AI',
+                    ceo: 'Ma Huateng',
+                    vp: 'Li Wei',
+                    ceo_email: 'ma.huateng@tencent.com',
+                    ceo_phone: '+86-755-8601-3388',
+                    vp_email: 'li.wei@tencent.com',
+                    vp_phone: '+86-755-8601-3389'
                 }
-                // Add more Asian companies as needed
             ],
             Africa: [
                 {
@@ -470,8 +650,58 @@
                     ceo_phone: '+27-21-920-5111',
                     vp_email: 'chipo.mangena@sasol.com',
                     vp_phone: '+27-21-920-5112'
+                },
+                // Additional African Companies
+                {
+                    name: 'Safaricom',
+                    description: 'Telecommunications',
+                    ceo: 'Peter Ndegwa',
+                    vp: 'Linda Karanja',
+                    ceo_email: 'peter.ndegwa@safaricom.com',
+                    ceo_phone: '+254-722-000-000',
+                    vp_email: 'linda.karanja@safaricom.com',
+                    vp_phone: '+254-722-000-001'
+                },
+                {
+                    name: 'Standard Bank',
+                    description: 'Banking',
+                    ceo: 'Ben Ngubane',
+                    vp: 'Thabiso Mokoena',
+                    ceo_email: 'ben.ngubane@standardbank.co.za',
+                    ceo_phone: '+27-11-123-4567',
+                    vp_email: 'thabiso.mokoena@standardbank.co.za',
+                    vp_phone: '+27-11-123-4568'
+                },
+                {
+                    name: 'Vodacom',
+                    description: 'Telecommunications',
+                    ceo: 'Sipho Maseko',
+                    vp: 'Naledi Dlamini',
+                    ceo_email: 'sipho.maseko@vodacom.com',
+                    ceo_phone: '+27-83-000-0000',
+                    vp_email: 'naledi.dlamini@vodacom.com',
+                    vp_phone: '+27-83-000-0001'
+                },
+                {
+                    name: 'Eskom',
+                    description: 'Electricity Supply',
+                    ceo: 'Phakamani Hadebe',
+                    vp: 'Nomvula Khumalo',
+                    ceo_email: 'phakamani.hadebe@eskom.co.za',
+                    ceo_phone: '+27-12-345-6789',
+                    vp_email: 'nomvula.khumalo@eskom.co.za',
+                    vp_phone: '+27-12-345-6790'
+                },
+                {
+                    name: 'Shoprite Holdings',
+                    description: 'Retail',
+                    ceo: 'Pieter Engelbrecht',
+                    vp: 'Thando Masango',
+                    ceo_email: 'pieter.engelbrecht@shoprite.com',
+                    ceo_phone: '+27-12-345-6789',
+                    vp_email: 'thando.masango@shoprite.com',
+                    vp_phone: '+27-12-345-6790'
                 }
-                // Add more African companies as needed
             ],
             SouthAmerica: [
                 {
@@ -523,8 +753,58 @@
                     ceo_phone: '+52-55-5000-0000',
                     vp_email: 'karla.jimenez@grupobimbo.com',
                     vp_phone: '+52-55-5000-0001'
+                },
+                // Additional South American Companies
+                {
+                    name: 'JBS S.A.',
+                    description: 'Food Processing',
+                    ceo: 'César Augusto Batista',
+                    vp: 'Maria Oliveira',
+                    ceo_email: 'cesar.batista@jbs.com.br',
+                    ceo_phone: '+55-11-9999-9999',
+                    vp_email: 'maria.oliveira@jbs.com.br',
+                    vp_phone: '+55-11-9999-9998'
+                },
+                {
+                    name: 'Itaú Unibanco',
+                    description: 'Banking',
+                    ceo: 'André Jacobi',
+                    vp: 'Roberta Lima',
+                    ceo_email: 'andre.jacobi@itau.com.br',
+                    ceo_phone: '+55-11-3333-3333',
+                    vp_email: 'roberta.lima@itau.com.br',
+                    vp_phone: '+55-11-3333-3334'
+                },
+                {
+                    name: 'BRF S.A.',
+                    description: 'Food Processing',
+                    ceo: 'José Carlos Semenzato',
+                    vp: 'Fernanda Costa',
+                    ceo_email: 'jose.semenzato@brf.com',
+                    ceo_phone: '+55-11-4444-4444',
+                    vp_email: 'fernanda.costa@brf.com',
+                    vp_phone: '+55-11-4444-4445'
+                },
+                {
+                    name: 'Vale S.A.',
+                    description: 'Mining',
+                    ceo: 'Eduardo Bartolomeo',
+                    vp: 'Mariana Lopes',
+                    ceo_email: 'eduardo.bartolomeo@vale.com',
+                    ceo_phone: '+55-31-3355-2000',
+                    vp_email: 'mariana.lopes@vale.com',
+                    vp_phone: '+55-31-3355-2001'
+                },
+                {
+                    name: 'Natura &Co',
+                    description: 'Cosmetics',
+                    ceo: 'Carlos Wizard Martins',
+                    vp: 'Luciana Souza',
+                    ceo_email: 'carlos.wizard@naturaco.com.br',
+                    ceo_phone: '+55-21-5555-5555',
+                    vp_email: 'luciana.souza@naturaco.com.br',
+                    vp_phone: '+55-21-5555-5556'
                 }
-                // Add more South American companies as needed
             ]
         };
 
@@ -549,6 +829,7 @@
                 data[continent].forEach(company => {
                     const card = document.createElement('div');
                     card.className = 'company-card';
+                    card.onclick = () => showDetails(company);
 
                     card.innerHTML = `
                         <h3>${company.name}</h3>
@@ -572,6 +853,31 @@
             companyList.style.display = 'flex';
         }
 
+        // Function to Display Company Details (Optional Enhancement)
+        function showDetails(company) {
+            const companyName = document.getElementById('companyName');
+            const ceoName = document.getElementById('ceoName');
+            const vpName = document.getElementById('vpName');
+            const ceoEmail = document.getElementById('ceoEmail');
+            const ceoPhone = document.getElementById('ceoPhone');
+            const vpEmail = document.getElementById('vpEmail');
+            const vpPhone = document.getElementById('vpPhone');
+
+            companyName.textContent = company.name;
+            ceoName.textContent = company.ceo;
+            vpName.textContent = company.vp;
+            ceoEmail.innerHTML = `<a href="mailto:${company.ceo_email}">${company.ceo_email}</a>`;
+            ceoPhone.textContent = company.ceo_phone;
+            vpEmail.innerHTML = `<a href="mailto:${company.vp_email}">${company.vp_email}</a>`;
+            vpPhone.textContent = company.vp_phone;
+
+            // Hide company list and show company details
+            const companyList = document.getElementById('companyList');
+            const companyDetails = document.getElementById('companyDetails');
+            companyList.style.display = 'none';
+            companyDetails.style.display = 'flex';
+        }
+
         // Function to Go Back to Continent Selection
         function goBack() {
             const mainContainer = document.getElementById('mainContainer');
@@ -582,7 +888,7 @@
             mainContainer.style.display = 'flex';
         }
 
-        // Function to Go Back to Company List from Details (Not used in this version)
+        // Function to Go Back to Company List from Details
         function goBackToCompanies() {
             const companyDetails = document.getElementById('companyDetails');
             const companyList = document.getElementById('companyList');
